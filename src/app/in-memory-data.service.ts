@@ -9,16 +9,16 @@ export class InMemoryDataService {
 
   createDb() {
     const heroes = [
-      { id: 11, name: 'Dr Nice' },
-      { id: 12, name: 'Narco' },
-      { id: 13, name: 'Bombasto' },
-      { id: 14, name: 'Celeritas' },
-      { id: 15, name: 'Magneta' },
-      { id: 16, name: 'RubberMan' },
-      { id: 17, name: 'Dynama' },
-      { id: 18, name: 'Dr IQ' },
-      { id: 19, name: 'Magma' },
-      { id: 20, name: 'Tornado' }
+      {id: 11, name: 'Dr Nasty'},
+      {id: 12, name: 'Narcos'},
+      {id: 13, name: 'Bomboon'},
+      {id: 14, name: 'Cliteritas'},
+      {id: 15, name: 'Smegma'},
+      {id: 16, name: 'CondomMan'},
+      {id: 17, name: 'DynaMama'},
+      {id: 18, name: 'Dr lowIQ'},
+      {id: 19, name: 'Smegarella'},
+      {id: 20, name: 'Tornada'}
     ];
     return {heroes};
   }

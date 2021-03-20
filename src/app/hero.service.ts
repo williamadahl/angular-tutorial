@@ -14,10 +14,18 @@ export class HeroService {
 
   private heroesUrl = 'api/heroes';
 
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
   constructor(
     private messageService: MessageService,
     private http: HttpClient
   ) { }
+
+  private log(message: string) {
+    this.messageService.add(`Hero service: ${message}`);
+  }
 
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
@@ -34,9 +42,7 @@ export class HeroService {
     );
   }
 
-  private log(message: string) {
-    this.messageService.add(`Hero service: ${message}`);
-  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
@@ -50,4 +56,12 @@ export class HeroService {
       return of(result as T);
     };
   }
+
+  updateHero(hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
+      tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
 }
