@@ -21,15 +21,17 @@ export class HeroService {
 
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
+      tap(_ => this.log('fetched heroes')),
       catchError(this.handleError<Hero[]>('Get heroes',[]))
     );
   }
 
   getHero(id: number): Observable<Hero> {
-    console.log('Got hero with id: ' + id);
-    const hero = HEROES.find(h => h.id === id) as Hero;
-    this.messageService.add(`Hero service: fetched hero id=${id}`);
-    return of(hero);
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http.get<Hero>(url).pipe(
+      tap(_ => this.log(`fetched hero id=${id}`)),
+      catchError(this.handleError<Hero>(`get hero id=${id}`))
+    );
   }
 
   private log(message: string) {
@@ -41,7 +43,7 @@ export class HeroService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation :'operation', result? : T){
+  private handleError<T>(operation : string, result? : T){
     return(error: any): Observable<T> => {
       console.error(error);
       this.log(`${operation} failed: ${error.message}`);
